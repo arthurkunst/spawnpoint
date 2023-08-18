@@ -6,6 +6,17 @@ local storage
 local path = minetest.get_worldpath().."/spawnpoint.conf"
 local data = Settings(path)
 
+----------------------
+--- RANDOM NUMBERS ---
+----------------------
+
+math.randomseed(os.time())
+math.random(); math.random(); math.random()
+
+
+spawnoffsetamount = 2
+
+
 if minetest.get_mod_storage then
 	storage = minetest.get_mod_storage()
 end
@@ -159,7 +170,10 @@ function spawnpoint.bring(player)
 
 	if player and spawnpoint.pos then
 		local pos = spawnpoint.pos
-		player:setpos({x=pos.x, y=pos.y+0.5, z=pos.z})
+		-- Randomize Spawnpoint with offset
+		local x_offset = math.random(-spawnoffsetamount, spawnoffsetamount);
+		local z_offset = math.random(-spawnoffsetamount, spawnoffsetamount);
+		player:setpos({x=pos.x+x_offset, y=pos.y+0.5, z=pos.z+z_offset})
 	end
 end
 
